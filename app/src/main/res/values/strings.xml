@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Switch2</string>
+    <string name="nom_du_parent">nom du parent</string>
+    <string name="nom_des_enfants">nom des enfants</string>
+    <string name="add">add</string>
+    <string name="parent">parent</string>
+    <string name="enfants">enfants</string>
+    <string name="return1">return1</string>
+    <string name="enfant">enfant</string>
+</resources>
