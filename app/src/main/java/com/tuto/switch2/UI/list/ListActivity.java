@@ -9,17 +9,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tuto.switch2.UI.adapter.EnfantAdapter;
-import com.tuto.switch2.UI.main.MainActivity;
-import com.tuto.switch2.UI.adapter.ParentAdapter;
 import com.tuto.switch2.R;
+import com.tuto.switch2.UI.list.adapter.ChildAdapter;
+import com.tuto.switch2.UI.list.adapter.ParentAdapter;
+import com.tuto.switch2.UI.main.MainActivity;
 import com.tuto.switch2.ViewModelFactory;
 
-
 public class ListActivity extends AppCompatActivity {
-
-    private ParentAdapter parentAdapter;
-    private EnfantAdapter enfantAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,21 +28,20 @@ public class ListActivity extends AppCompatActivity {
 
         final ListViewModel listViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance()).get(ListViewModel.class);
 
-        listViewModel.getParentList().observe(this, parents -> parentAdapter.submitList(listViewModel.getparentslist()));
-
-        listViewModel.getAllEnfantsBySelectedParentName().observe(this, enfants -> enfantAdapter.submitList(listViewModel.getenfantslist()));
-
-        parentAdapter = new ParentAdapter(listViewModel::onParentNameChanged);
+        ParentAdapter parentAdapter = new ParentAdapter(listViewModel::onParentClicked);
         parRecyclerView.setAdapter(parentAdapter);
-        parRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        enfantAdapter = new EnfantAdapter();
-        enfRecyclerView.setAdapter(enfantAdapter);
-        parRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ChildAdapter childAdapter = new ChildAdapter();
+        enfRecyclerView.setAdapter(childAdapter);
 
         returnButton.setOnClickListener(view -> {
             Intent intent = new Intent(ListActivity.this, MainActivity.class);
             startActivity(intent);
+        });
+
+        listViewModel.getViewStateLiveData().observe(this, viewState -> {
+            parentAdapter.submitList(viewState.getParentViewStates());
+            childAdapter.submitList(viewState.getChildViewStates());
         });
     }
 }

@@ -1,4 +1,4 @@
-package com.tuto.switch2.UI.adapter;
+package com.tuto.switch2.UI.list.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tuto.switch2.R;
+import com.tuto.switch2.UI.list.ParentViewState;
 import com.tuto.switch2.model.Parent;
 
-public class ParentAdapter extends ListAdapter<Parent, ParentAdapter.ParentViewHolder> {
+public class ParentAdapter extends ListAdapter<ParentViewState, ParentAdapter.ParentViewHolder> {
 
 
     private final OnUserClickedListener listener;
@@ -40,9 +41,9 @@ public class ParentAdapter extends ListAdapter<Parent, ParentAdapter.ParentViewH
         TextView textView;
         ConstraintLayout constraintLayout;
 
-        public void bind(@NonNull Parent parent, @NonNull OnUserClickedListener listener) {
+        public void bind(@NonNull ParentViewState parent, @NonNull OnUserClickedListener listener) {
             textView.setText(parent.getName());
-            textView.setOnClickListener(view -> listener.onUserClicked(parent.getName()));
+            textView.setOnClickListener(view -> listener.onUserClicked(parent.getId()));
         }
 
         public ParentViewHolder(@NonNull View itemView) {
@@ -53,21 +54,21 @@ public class ParentAdapter extends ListAdapter<Parent, ParentAdapter.ParentViewH
         }
     }
 
-    public static class ParentDiffCallBack extends DiffUtil.ItemCallback<Parent> {
+    public static class ParentDiffCallBack extends DiffUtil.ItemCallback<ParentViewState> {
 
         @Override
-        public boolean areItemsTheSame(@NonNull Parent oldItem, @NonNull Parent newItem) {
-            return oldItem.getName().equals(newItem.getName());
+        public boolean areItemsTheSame(@NonNull ParentViewState oldItem, @NonNull ParentViewState newItem) {
+            return oldItem.getId() == newItem.getId();
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull Parent oldItem, @NonNull Parent newItem) {
+        public boolean areContentsTheSame(@NonNull ParentViewState oldItem, @NonNull ParentViewState newItem) {
             return oldItem.equals(newItem);
         }
     }
 
     public interface OnUserClickedListener {
-        void onUserClicked(String parentName);
+        void onUserClicked(int id);
     }
 
 }
