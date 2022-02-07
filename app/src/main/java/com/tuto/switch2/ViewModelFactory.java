@@ -4,20 +4,25 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.tuto.switch2.REPO.TestRepository;
+import com.tuto.switch2.REPO.CurrentlySelectedParentRepository;
+import com.tuto.switch2.REPO.ParentRepository;
 import com.tuto.switch2.UI.list.ListViewModel;
 import com.tuto.switch2.UI.main.MainViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private static ViewModelFactory sFactory;
-    private final TestRepository testRepository;
+    private final CurrentlySelectedParentRepository currentlySelectedParentRepository;
+    private final ParentRepository parentRepository;
 
 
     // Pattern singleton : seule la classe elle-même peut s'instancier
-    private ViewModelFactory(@NonNull TestRepository testRepository) {
-        this.testRepository = testRepository;
-
+    private ViewModelFactory(
+        @NonNull CurrentlySelectedParentRepository currentlySelectedParentRepository,
+        @NonNull ParentRepository parentRepository
+    ) {
+        this.currentlySelectedParentRepository = currentlySelectedParentRepository;
+        this.parentRepository = parentRepository;
     }
 
     // Pattern singleton : récupération de l'Instance unique disponible partout dans l'app
@@ -26,7 +31,8 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             synchronized (ViewModelFactory.class) {
                 if (sFactory == null) {
                     sFactory = new ViewModelFactory(
-                            new TestRepository()
+                        new CurrentlySelectedParentRepository(),
+                        new ParentRepository()
                     );
                 }
             }
@@ -41,14 +47,15 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     public <T extends ViewModel> T create(Class<T> modelClass) {
         if (modelClass.isAssignableFrom(MainViewModel.class)) {
             return (T) new MainViewModel(
-                    testRepository
+                parentRepository
             );
         }
         // C'est ici qu'on va créer tous les différents VM : on utilise une seule ViewModelFactory pour toute l'application
         // Exemple pour un deuxième ViewModel :
         else if (modelClass.isAssignableFrom(ListViewModel.class)) {
             return (T) new ListViewModel(
-                    testRepository
+                currentlySelectedParentRepository,
+                parentRepository
             );
         }
         throw new IllegalArgumentException("Unknown ViewModel class");

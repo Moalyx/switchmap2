@@ -6,11 +6,16 @@ import java.util.Objects;
 
 public class Parent {
 
+    private final int id;
     private final String name;
 
-    public Parent(String name) {
-
+    public Parent(int id, String name) {
+        this.id = id;
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -22,20 +27,20 @@ public class Parent {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Parent parent = (Parent) o;
-        return name.equals(parent.name);
+        return id == parent.id && Objects.equals(name, parent.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(id, name);
     }
 
     @NonNull
     @Override
     public String toString() {
         return "Parent{" +
-                "name='" + name + '\'' +
-                '}';
+            "id=" + id +
+            ", name='" + name + '\'' +
+            '}';
     }
-
 }

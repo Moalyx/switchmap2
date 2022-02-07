@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/enfant_name"
-        android:hint="@string/enfant"
+        android:hint="@string/child"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
