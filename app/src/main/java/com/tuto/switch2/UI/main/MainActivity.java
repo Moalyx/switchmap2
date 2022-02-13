@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         EditText parentEditText = findViewById(R.id.name_parent);
         EditText childrenEditText = findViewById(R.id.childrens);
+        EditText ageEditText = findViewById(R.id.ages);
         FloatingActionButton addButton = findViewById(R.id.add);
 
         parentEditText.addTextChangedListener(new TextWatcher() {
@@ -58,6 +59,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 viewModel.onNameEnfantChanged(editable.toString());
+
+            }
+        });
+
+        ageEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                viewModel.onAgeEnfantChanged(editable.toString());
 
             }
         });

@@ -12,7 +12,7 @@
       android:layout_width="0dp"
       android:layout_height="0dp"
       android:orientation="horizontal"
-      app:layout_constraintGuide_percent="0.4" />
+      app:layout_constraintGuide_percent="0.3" />
 
   <TextView
       android:id="@+id/parent_title"
@@ -60,19 +60,43 @@
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/childrenlist"
       android:layout_width="match_parent"
-      android:layout_height="250dp"
+      android:layout_height="150dp"
+      android:layout_marginTop="8dp"
+      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+      app:layout_constraintBottom_toTopOf="@id/agetitle"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/childrentitle" />
+
+  <TextView
+      android:id="@+id/agetitle"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:text="ages"
+      android:textSize="18sp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/childrenlist"
+      app:layout_constraintBottom_toTopOf="@id/agelist"/>
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/agelist"
+      android:layout_width="match_parent"
+      android:layout_height="150dp"
       android:layout_marginTop="8dp"
       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
       app:layout_constraintBottom_toTopOf="@id/return_button"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/childrentitle" />
+      app:layout_constraintTop_toBottomOf="@id/agetitle" />
 
   <Button
       android:id="@+id/return_button"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      app:layout_constraintTop_toBottomOf="@id/childrenlist"
+      app:layout_constraintTop_toBottomOf="@id/agelist"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       android:layout_marginTop="15dp"

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tuto.switch2.R;
 import com.tuto.switch2.UI.list.ParentViewState;
-import com.tuto.switch2.model.Parent;
+
 
 public class ParentAdapter extends ListAdapter<ParentViewState, ParentAdapter.ParentViewHolder> {
 
@@ -43,7 +43,12 @@ public class ParentAdapter extends ListAdapter<ParentViewState, ParentAdapter.Pa
 
         public void bind(@NonNull ParentViewState parent, @NonNull OnUserClickedListener listener) {
             textView.setText(parent.getName());
-            textView.setOnClickListener(view -> listener.onUserClicked(parent.getId()));
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onUserClicked(parent.getId());
+                }
+            });
         }
 
         public ParentViewHolder(@NonNull View itemView) {

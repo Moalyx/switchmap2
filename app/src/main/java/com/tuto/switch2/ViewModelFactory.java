@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.tuto.switch2.REPO.CurrentlySelectedChildRepository;
 import com.tuto.switch2.REPO.CurrentlySelectedParentRepository;
 import com.tuto.switch2.REPO.ParentRepository;
 import com.tuto.switch2.UI.list.ListViewModel;
@@ -13,15 +14,18 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private static ViewModelFactory sFactory;
     private final CurrentlySelectedParentRepository currentlySelectedParentRepository;
+    private final CurrentlySelectedChildRepository currentlySelectedChildRepository;
     private final ParentRepository parentRepository;
 
 
     // Pattern singleton : seule la classe elle-même peut s'instancier
     private ViewModelFactory(
         @NonNull CurrentlySelectedParentRepository currentlySelectedParentRepository,
+        @NonNull CurrentlySelectedChildRepository currentlySelectedChildRepository,
         @NonNull ParentRepository parentRepository
     ) {
         this.currentlySelectedParentRepository = currentlySelectedParentRepository;
+        this.currentlySelectedChildRepository = currentlySelectedChildRepository;
         this.parentRepository = parentRepository;
     }
 
@@ -32,6 +36,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                 if (sFactory == null) {
                     sFactory = new ViewModelFactory(
                         new CurrentlySelectedParentRepository(),
+                        new CurrentlySelectedChildRepository(),
                         new ParentRepository()
                     );
                 }
@@ -55,6 +60,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         else if (modelClass.isAssignableFrom(ListViewModel.class)) {
             return (T) new ListViewModel(
                 currentlySelectedParentRepository,
+                currentlySelectedChildRepository,
                 parentRepository
             );
         }

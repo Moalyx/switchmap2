@@ -10,6 +10,7 @@ public class MainViewModel extends ViewModel {
     private final ParentRepository parentRepository;
     private String parentName;
     private String childNames;
+    private String ages;
 
     public MainViewModel(ParentRepository parentRepository) {
         this.parentRepository = parentRepository;
@@ -23,13 +24,23 @@ public class MainViewModel extends ViewModel {
         childNames = name;
     }
 
+    public void onAgeEnfantChanged(String age){
+        ages = age;
+    }
+
     public void onAddButtonClicked() {
         if (parentName != null && !parentName.isEmpty()) {
             int parentId = parentRepository.onAddParentToList(parentName);
+            int childId = parentRepository.onAddChildToList(parentId, childNames);
 
             String[] childNameList = childNames.split("[,; \n]");
             for (String childName : childNameList) {
                 parentRepository.onAddChildToList(parentId, childName);
+            }
+
+            String[] ageChildList = ages.split("[,; \n]");
+            for (String ageChild : ageChildList){
+                parentRepository.onAddAgeToList(childId, Integer.parseInt(ageChild));
             }
         }
     }

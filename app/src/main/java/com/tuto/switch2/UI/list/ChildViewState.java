@@ -9,9 +9,11 @@ public class ChildViewState {
     private final int id;
     private final String name;
 
+
     public ChildViewState(int id, String name) {
         this.id = id;
         this.name = name;
+
     }
 
     public int getId() {

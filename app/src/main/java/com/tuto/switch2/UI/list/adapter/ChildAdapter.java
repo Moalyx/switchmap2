@@ -15,9 +15,12 @@ import com.tuto.switch2.UI.list.ChildViewState;
 
 public class ChildAdapter extends ListAdapter<ChildViewState, ChildAdapter.ChildViewHolder> {
 
+    private final ChildAdapter.OnUserClickedListener listener;
 
-    public ChildAdapter() {
+
+    public ChildAdapter(@NonNull ChildAdapter.OnUserClickedListener listener) {
         super(new ChildDiffCallBack());
+        this.listener = listener;
     }
 
     @NonNull
@@ -28,7 +31,7 @@ public class ChildAdapter extends ListAdapter<ChildViewState, ChildAdapter.Child
 
     @Override
     public void onBindViewHolder(@NonNull ChildViewHolder holder, int position) {
-        holder.bind(getItem(position));
+        holder.bind(getItem(position), listener);
 
     }
 
@@ -42,8 +45,14 @@ public class ChildAdapter extends ListAdapter<ChildViewState, ChildAdapter.Child
             textView = itemView.findViewById(R.id.enfant_name);
         }
 
-        public void bind(ChildViewState viewState) {
-            textView.setText(viewState.getName());
+        public void bind(ChildViewState child,@NonNull ChildAdapter.OnUserClickedListener listener) {
+            textView.setText(child.getName());
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onUserClicked(child.getId());
+                }
+            });
         }
     }
 
@@ -58,5 +67,9 @@ public class ChildAdapter extends ListAdapter<ChildViewState, ChildAdapter.Child
         public boolean areContentsTheSame(@NonNull ChildViewState oldItem, @NonNull ChildViewState newItem) {
             return oldItem.equals(newItem);
         }
+    }
+
+    public interface OnUserClickedListener {
+        void onUserClicked(int id);
     }
 }

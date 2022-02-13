@@ -8,12 +8,14 @@ import java.util.Objects;
 public class ListViewState {
 
     private final List<ParentViewState> parentViewStates;
-
     private final List<ChildViewState> childViewStates;
+    private final List<AgeViewState> ageViewStates;
 
-    public ListViewState(List<ParentViewState> parentViewStates, List<ChildViewState> childViewStates) {
+    public ListViewState(List<ParentViewState> parentViewStates, List<ChildViewState> childViewStates, List<AgeViewState> ageViewStates) {
         this.parentViewStates = parentViewStates;
         this.childViewStates = childViewStates;
+        this.ageViewStates = ageViewStates;
+
     }
 
     public List<ParentViewState> getParentViewStates() {
@@ -22,6 +24,10 @@ public class ListViewState {
 
     public List<ChildViewState> getChildViewStates() {
         return childViewStates;
+    }
+
+    public List<AgeViewState> getAgeViewStates(){
+        return ageViewStates;
     }
 
     @Override
