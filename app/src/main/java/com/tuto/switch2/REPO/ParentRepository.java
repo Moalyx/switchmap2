@@ -65,31 +65,29 @@ public class ParentRepository {
 
     public int onAddChildToList(int parentId, String name) {
         currentMaxChildId++;
-//        children.add(new Child(currentMaxChildId, parentId, name));
+        children.add(new Child(currentMaxChildId, parentId, name));
 
-        Child found = null;
-
-        for (Child child : children) {
-            if (child.getName().equals(name)) {
-                found = child;
-                break;
-            }
-        }
-
-        if (found == null) {
-            currentMaxChildId++;
-
-            children.add(new Child(currentMaxChildId, parentId, name));
-        } else {
-            children.add(new Child(found.getId(), parentId, name));
-        }
+//        Child found = null;
+//
+//        for (Child child : children) {
+//            if (child.getName().equals(name)) {
+//                found = child;
+//                break;
+//            }
+//        }
+//
+//        if (found == null) {
+//            currentMaxChildId++;
+//
+//            children.add(new Child(currentMaxChildId, parentId, name));
+//        } else {
+//            children.add(new Child(found.getId(), parentId, name));
+//        }
         return currentMaxChildId;
     }
 
     public void onAddAgeToList(int childId, int age) {
         currentMaxAgeId++;
         ageList.add(new Age(currentMaxAgeId, childId, age));
-
-
     }
 }

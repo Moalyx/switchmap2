@@ -35,11 +35,14 @@ public class MainViewModel extends ViewModel {
 
             String[] childNameList = childNames.split("[,; \n]");
             for (String childName : childNameList) {
+                childName = childName.trim();
                 parentRepository.onAddChildToList(parentId, childName);
             }
 
             String[] ageChildList = ages.split("[,; \n]");
             for (String ageChild : ageChildList){
+                ageChild = ageChild.trim();
+                childId++;
                 parentRepository.onAddAgeToList(childId, Integer.parseInt(ageChild));
             }
         }
