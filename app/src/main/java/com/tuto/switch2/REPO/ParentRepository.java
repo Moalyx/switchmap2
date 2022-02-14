@@ -63,37 +63,11 @@ public class ParentRepository {
         return currentMaxParentId;
     }
 
-    public int getChildId() {
-        int id = 0;
-        if (!children.isEmpty()) {
-            for (int i = 0; i < children.size(); i++) {
-                id = children.get(i).getId();
-            }
-        }
-        return id;
-    }
-
-    public void onAddChildToList(int parentId, String name) {
+    public int onAddChildToList(int parentId, String name) {
         currentMaxChildId++;
         children.add(new Child(currentMaxChildId, parentId, name));
 
-//        Child found = null;
-//
-//        for (Child child : children) {
-//            if (child.getName().equals(name)) {
-//                found = child;
-//                break;
-//            }
-//        }
-//
-//        if (found == null) {
-//            currentMaxChildId++;
-//
-//            children.add(new Child(currentMaxChildId, parentId, name));
-//        } else {
-//            children.add(new Child(found.getId(), parentId, name));
-//        }
-
+        return currentMaxChildId;
     }
 
     public void onAddAgeToList(int childId, int age) {

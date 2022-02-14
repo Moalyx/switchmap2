@@ -31,20 +31,15 @@ public class MainViewModel extends ViewModel {
     public void onAddButtonClicked() {
         if (parentName != null && !parentName.isEmpty()) {
             int parentId = parentRepository.onAddParentToList(parentName);
-            //int childId = parentRepository.onAddChildToList(parentId, childNames); ICi aussi probleme car cela rajouter une ligne dans la recyclerview car j'appelé deux fois cette methode l34 et l47
-            int childId = parentRepository.getChildId();
 
             String[] childNameList = childNames.split("[,; \n]");
-            for (String childName : childNameList) {
-                childName = childName.trim();
-                parentRepository.onAddChildToList(parentId, childName);
-            }
-
             String[] ageChildList = ages.split("[,; \n]");
-            for (String ageChild : ageChildList) {
-                ageChild = ageChild.trim();
-                childId++; //le probleme etait ici, je n'avais pas incrémenter l'id du coup tous les ages avaient le meme childId
-                parentRepository.onAddAgeToList(childId, Integer.parseInt(ageChild));
+
+            for (int i = 0; i < childNameList.length; i++) {
+                String childName = childNameList[i].trim();
+                String childAge = ageChildList[i].trim();
+                int childId = parentRepository.onAddChildToList(parentId, childName);
+                parentRepository.onAddAgeToList(childId, Integer.parseInt(childAge));
             }
         }
     }

@@ -22,7 +22,6 @@ public class ListViewModel extends ViewModel {
 
     private final CurrentlySelectedParentRepository currentlySelectedParentRepository;
     private final CurrentlySelectedChildRepository currentlySelectedChildRepository;
-    private final ParentRepository parentRepository;
 
     private final MediatorLiveData<ListViewState> mediatorLiveData = new MediatorLiveData<>();
 
@@ -33,11 +32,9 @@ public class ListViewModel extends ViewModel {
     ) {
         this.currentlySelectedParentRepository = currentlySelectedParentRepository;
         this.currentlySelectedChildRepository = currentlySelectedChildRepository;
-        this.parentRepository = parentRepository;
 
         LiveData<List<Parent>> parentsLiveData = parentRepository.getParentListMutableLiveData();
         LiveData<Integer> currentlySelectedParentIdLiveData = currentlySelectedParentRepository.getSelectedParentIdLiveData();
-        LiveData<Integer> currentlySelectedChildIdLiveData = currentlySelectedChildRepository.getSelectedChildIdLiveData();
         LiveData<List<Child>> childForSelectedParentLiveData = Transformations.switchMap(currentlySelectedParentRepository.getSelectedParentIdLiveData(), new Function<Integer, LiveData<List<Child>>>() {
             @Override
             public LiveData<List<Child>> apply(Integer newParentId) {
@@ -54,42 +51,38 @@ public class ListViewModel extends ViewModel {
         mediatorLiveData.addSource(parentsLiveData, new Observer<List<Parent>>() {
             @Override
             public void onChanged(List<Parent> parents) {
-                combine(parents, currentlySelectedParentIdLiveData.getValue(), childForSelectedParentLiveData.getValue(), ageForSelectedChildLiveData.getValue(), currentlySelectedChildIdLiveData.getValue());
+                combine(parents, currentlySelectedParentIdLiveData.getValue(), childForSelectedParentLiveData.getValue(), ageForSelectedChildLiveData.getValue());
             }
         });
 
         mediatorLiveData.addSource(currentlySelectedParentIdLiveData, new Observer<Integer>() {
             @Override
             public void onChanged(Integer currentlySelectedParentId) {
-                combine(parentsLiveData.getValue(), currentlySelectedParentId, childForSelectedParentLiveData.getValue(), ageForSelectedChildLiveData.getValue(), currentlySelectedChildIdLiveData.getValue());
+                combine(parentsLiveData.getValue(), currentlySelectedParentId, childForSelectedParentLiveData.getValue(), ageForSelectedChildLiveData.getValue());
             }
         });
 
         mediatorLiveData.addSource(childForSelectedParentLiveData, new Observer<List<Child>>() {
             @Override
             public void onChanged(List<Child> children) {
-                combine(parentsLiveData.getValue(), currentlySelectedParentIdLiveData.getValue(), children, ageForSelectedChildLiveData.getValue(), currentlySelectedChildIdLiveData.getValue());
+                combine(parentsLiveData.getValue(), currentlySelectedParentIdLiveData.getValue(), children, ageForSelectedChildLiveData.getValue());
             }
         });
 
         mediatorLiveData.addSource(ageForSelectedChildLiveData, new Observer<List<Age>>() {
             @Override
             public void onChanged(List<Age> ages) {
-                combine(parentsLiveData.getValue(), currentlySelectedParentIdLiveData.getValue(), childForSelectedParentLiveData.getValue(), ages, currentlySelectedChildIdLiveData.getValue());
+                combine(parentsLiveData.getValue(), currentlySelectedParentIdLiveData.getValue(), childForSelectedParentLiveData.getValue(), ages);
             }
         });
-
-        mediatorLiveData.addSource(currentlySelectedChildIdLiveData, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer currentlySelectedChildtId) {
-                combine(parentsLiveData.getValue(), currentlySelectedParentIdLiveData.getValue(), childForSelectedParentLiveData.getValue(), ageForSelectedChildLiveData.getValue(), currentlySelectedChildtId);
-            }
-        });
-
-
     }
 
-    private void combine(@Nullable List<Parent> parents, @Nullable Integer currentlySelectedParentId, @Nullable List<Child> children, @Nullable List<Age> ages, @Nullable Integer currentlySelectedChildId) {
+    private void combine(
+        @Nullable List<Parent> parents,
+        @Nullable Integer currentlySelectedParentId,
+        @Nullable List<Child> children,
+        @Nullable List<Age> ages
+    ) {
         if (parents == null) {
             return;
         }
@@ -144,7 +137,7 @@ public class ListViewModel extends ViewModel {
     }
 
     public void onChildClicked(int childId){
-        currentlySelectedChildRepository.setCurrentlySelectedchlidId(childId);
+        currentlySelectedChildRepository.setCurrentlySelectedChildId(childId);
     }
 
 }

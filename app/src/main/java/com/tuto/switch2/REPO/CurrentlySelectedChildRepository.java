@@ -7,7 +7,7 @@ public class CurrentlySelectedChildRepository {
 
     private final MutableLiveData<Integer> selectedChildIdMutableLiveData = new MutableLiveData<>();
 
-    public void setCurrentlySelectedchlidId(int id) {
+    public void setCurrentlySelectedChildId(int id) {
         selectedChildIdMutableLiveData.setValue(id);
     }
 

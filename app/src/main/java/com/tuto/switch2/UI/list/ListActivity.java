@@ -7,7 +7,6 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tuto.switch2.R;
@@ -39,9 +38,9 @@ public class ListActivity extends AppCompatActivity {
         });
         parRecyclerView.setAdapter(parentAdapter);
 
-        ChildAdapter childAdapter = new ChildAdapter(new ChildAdapter.OnUserClickedListener() {
+        ChildAdapter childAdapter = new ChildAdapter(new ChildAdapter.OnChildClickedListener() {
             @Override
-            public void onUserClicked(int id) {
+            public void onChildClicked(int id) {
                 listViewModel.onChildClicked(id);
 
             }

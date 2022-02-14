@@ -22,7 +22,7 @@ class com.tuto.switch2.UI.list.adapter.ChildAdapter.ChildDiffCallBack {
 + boolean areItemsTheSame(ChildViewState,ChildViewState)
 + boolean areContentsTheSame(ChildViewState,ChildViewState)
 }
-interface com.tuto.switch2.UI.list.adapter.ChildAdapter.OnUserClickedListener {
+interface com.tuto.switch2.UI.list.adapter.ChildAdapter.OnChildClickedListener {
 ~ void onUserClicked(int)
 }
 class com.tuto.switch2.ViewModelFactory {
@@ -183,7 +183,7 @@ com.tuto.switch2.UI.list.adapter.ChildAdapter +.. com.tuto.switch2.UI.list.adapt
 com.tuto.switch2.UI.list.adapter.ViewHolder <|-- com.tuto.switch2.UI.list.adapter.ChildAdapter.ChildViewHolder
 com.tuto.switch2.UI.list.adapter.ChildAdapter +.. com.tuto.switch2.UI.list.adapter.ChildAdapter.ChildDiffCallBack
 com.tuto.switch2.UI.list.adapter.ItemCallback <|-- com.tuto.switch2.UI.list.adapter.ChildAdapter.ChildDiffCallBack
-com.tuto.switch2.UI.list.adapter.ChildAdapter +.. com.tuto.switch2.UI.list.adapter.ChildAdapter.OnUserClickedListener
+com.tuto.switch2.UI.list.adapter.ChildAdapter +.. com.tuto.switch2.UI.list.adapter.ChildAdapter.OnChildClickedListener
 com.tuto.switch2.Factory <|.. com.tuto.switch2.ViewModelFactory
 androidx.recyclerview.widget.ListAdapter <|-- com.tuto.switch2.UI.list.adapter.AgeAdapter
 com.tuto.switch2.UI.list.adapter.AgeAdapter +.. com.tuto.switch2.UI.list.adapter.AgeAdapter.AgeViewHolder

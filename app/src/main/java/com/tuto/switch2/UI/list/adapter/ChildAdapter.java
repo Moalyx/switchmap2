@@ -15,10 +15,10 @@ import com.tuto.switch2.UI.list.ChildViewState;
 
 public class ChildAdapter extends ListAdapter<ChildViewState, ChildAdapter.ChildViewHolder> {
 
-    private final ChildAdapter.OnUserClickedListener listener;
+    private final OnChildClickedListener listener;
 
 
-    public ChildAdapter(@NonNull ChildAdapter.OnUserClickedListener listener) {
+    public ChildAdapter(@NonNull OnChildClickedListener listener) {
         super(new ChildDiffCallBack());
         this.listener = listener;
     }
@@ -45,12 +45,12 @@ public class ChildAdapter extends ListAdapter<ChildViewState, ChildAdapter.Child
             textView = itemView.findViewById(R.id.enfant_name);
         }
 
-        public void bind(ChildViewState child,@NonNull ChildAdapter.OnUserClickedListener listener) {
+        public void bind(ChildViewState child,@NonNull OnChildClickedListener listener) {
             textView.setText(child.getName());
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onUserClicked(child.getId());
+                    listener.onChildClicked(child.getId());
                 }
             });
         }
@@ -69,7 +69,7 @@ public class ChildAdapter extends ListAdapter<ChildViewState, ChildAdapter.Child
         }
     }
 
-    public interface OnUserClickedListener {
-        void onUserClicked(int id);
+    public interface OnChildClickedListener {
+        void onChildClicked(int id);
     }
 }
