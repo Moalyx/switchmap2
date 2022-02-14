@@ -31,7 +31,7 @@ public class MainViewModel extends ViewModel {
     public void onAddButtonClicked() {
         if (parentName != null && !parentName.isEmpty()) {
             int parentId = parentRepository.onAddParentToList(parentName);
-            //int childId = parentRepository.onAddChildToList(parentId, childNames); ICi aussi probleme
+            //int childId = parentRepository.onAddChildToList(parentId, childNames); ICi aussi probleme car cela rajouter une ligne dans la recyclerview car j'appelé deux fois cette methode l34 et l47
             int childId = parentRepository.childId();
 
             String[] childNameList = childNames.split("[,; \n]");

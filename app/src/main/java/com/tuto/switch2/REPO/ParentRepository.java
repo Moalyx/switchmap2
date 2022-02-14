@@ -65,7 +65,7 @@ public class ParentRepository {
 
     public int childId(){
         int id =0;
-        if (children != null && !children.isEmpty()){
+        if (!children.isEmpty()){
             for(int i = 0; i < children.size(); i++){
                  id = children.get(i).getId();
             }
