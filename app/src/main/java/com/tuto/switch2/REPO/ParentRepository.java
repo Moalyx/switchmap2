@@ -63,11 +63,11 @@ public class ParentRepository {
         return currentMaxParentId;
     }
 
-    public int childId(){
-        int id =0;
-        if (!children.isEmpty()){
-            for(int i = 0; i < children.size(); i++){
-                 id = children.get(i).getId();
+    public int getChildId() {
+        int id = 0;
+        if (!children.isEmpty()) {
+            for (int i = 0; i < children.size(); i++) {
+                id = children.get(i).getId();
             }
         }
         return id;

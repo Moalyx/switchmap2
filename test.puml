@@ -1,0 +1,202 @@
+@startuml
+class com.tuto.switch2.UI.list.ListViewModel {
+- CurrentlySelectedParentRepository currentlySelectedParentRepository
+- CurrentlySelectedChildRepository currentlySelectedChildRepository
+- ParentRepository parentRepository
+- MediatorLiveData<ListViewState> mediatorLiveData
+- void combine(List<Parent>,Integer,List<Child>,List<Age>,Integer)
++ LiveData<ListViewState> getListViewStateLiveData()
++ void onParentClicked(int)
++ void onChildClicked(int)
+}
+class com.tuto.switch2.UI.list.adapter.ChildAdapter {
+- ChildAdapter.OnUserClickedListener listener
++ ChildViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(ChildViewHolder,int)
+}
+class com.tuto.switch2.UI.list.adapter.ChildAdapter.ChildViewHolder {
+- TextView textView
++ void bind(ChildViewState,ChildAdapter.OnUserClickedListener)
+}
+class com.tuto.switch2.UI.list.adapter.ChildAdapter.ChildDiffCallBack {
++ boolean areItemsTheSame(ChildViewState,ChildViewState)
++ boolean areContentsTheSame(ChildViewState,ChildViewState)
+}
+interface com.tuto.switch2.UI.list.adapter.ChildAdapter.OnUserClickedListener {
+~ void onUserClicked(int)
+}
+class com.tuto.switch2.ViewModelFactory {
+- {static} ViewModelFactory sFactory
+- CurrentlySelectedParentRepository currentlySelectedParentRepository
+- CurrentlySelectedChildRepository currentlySelectedChildRepository
+- ParentRepository parentRepository
++ {static} ViewModelFactory getInstance()
++ T create(Class<T>)
+}
+class com.tuto.switch2.REPO.CurrentlySelectedChildRepository {
+- MutableLiveData<Integer> selectedChildIdMutableLiveData
++ void setCurrentlySelectedchlidId(int)
++ LiveData<Integer> getSelectedChildIdLiveData()
+}
+class com.tuto.switch2.UI.list.ParentViewState {
+- int id
+- String name
+- boolean isSelected
++ int getId()
++ String getName()
++ boolean isSelected()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+class com.tuto.switch2.UI.list.ListViewState {
+- List<ParentViewState> parentViewStates
+- List<ChildViewState> childViewStates
+- List<AgeViewState> ageViewStates
++ List<ParentViewState> getParentViewStates()
++ List<ChildViewState> getChildViewStates()
++ List<AgeViewState> getAgeViewStates()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+class com.tuto.switch2.model.Age {
+- int age
+- int id
+- int childId
++ int getAge()
++ int getAgeId()
++ int getChildId()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+class com.tuto.switch2.REPO.CurrentlySelectedParentRepository {
+- MutableLiveData<Integer> selectedParentIdMutableLiveData
++ void setCurrentlySelectedParentId(int)
++ LiveData<Integer> getSelectedParentIdLiveData()
+}
+class com.tuto.switch2.model.Parent {
+- int id
+- String name
++ int getId()
++ String getName()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+class com.tuto.switch2.model.Child {
+- int id
+- int parentId
+- String name
++ int getId()
++ int getParentId()
++ String getName()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+class com.tuto.switch2.UI.list.adapter.AgeAdapter {
++ AgeAdapter.AgeViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(AgeAdapter.AgeViewHolder,int)
+}
+class com.tuto.switch2.UI.list.adapter.AgeAdapter.AgeViewHolder {
+- TextView textView
++ void bind(AgeViewState)
+}
+class com.tuto.switch2.UI.list.adapter.AgeAdapter.AgeDiffCallBack {
++ boolean areItemsTheSame(AgeViewState,AgeViewState)
++ boolean areContentsTheSame(AgeViewState,AgeViewState)
+}
+class com.tuto.switch2.UI.list.ChildViewState {
+- int id
+- String name
++ int getId()
++ String getName()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+class com.tuto.switch2.UI.list.adapter.ParentAdapter {
+- OnUserClickedListener listener
++ ParentViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(ParentViewHolder,int)
+}
+class com.tuto.switch2.UI.list.adapter.ParentAdapter.ParentViewHolder {
+~ TextView textView
+~ ConstraintLayout constraintLayout
++ void bind(ParentViewState,OnUserClickedListener)
+}
+class com.tuto.switch2.UI.list.adapter.ParentAdapter.ParentDiffCallBack {
++ boolean areItemsTheSame(ParentViewState,ParentViewState)
++ boolean areContentsTheSame(ParentViewState,ParentViewState)
+}
+interface com.tuto.switch2.UI.list.adapter.ParentAdapter.OnUserClickedListener {
+~ void onUserClicked(int)
+}
+class com.tuto.switch2.UI.main.MainViewModel {
+- ParentRepository parentRepository
+- String parentName
+- String childNames
+- String ages
++ void onParentNameChanged(String)
++ void onNameEnfantChanged(String)
++ void onAgeEnfantChanged(String)
++ void onAddButtonClicked()
+}
+class com.tuto.switch2.REPO.ParentRepository {
+- MutableLiveData<List<Parent>> parentListMutableLiveData
+- List<Parent> parents
+- List<Child> children
+- List<Age> ageList
+- int currentMaxParentId
+- int currentMaxChildId
+- int currentMaxAgeId
++ LiveData<List<Parent>> getParentListMutableLiveData()
++ LiveData<List<Child>> getAllChildrenByParentId(int)
++ LiveData<List<Age>> getAllAgeByChildrenId(int)
++ int onAddParentToList(String)
++ int childId()
++ void onAddChildToList(int,String)
++ void onAddAgeToList(int,int)
+}
+class com.tuto.switch2.UI.list.AgeViewState {
+- String age
+- int id
++ String getAge()
++ int getAgeId()
++ boolean equals(Object)
++ int hashCode()
++ String toString()
+}
+class com.tuto.switch2.UI.list.ListActivity {
+# void onCreate(Bundle)
+}
+class com.tuto.switch2.UI.main.MainActivity {
+# void onCreate(Bundle)
+}
+
+
+androidx.lifecycle.ViewModel <|-- com.tuto.switch2.UI.list.ListViewModel
+androidx.recyclerview.widget.ListAdapter <|-- com.tuto.switch2.UI.list.adapter.ChildAdapter
+com.tuto.switch2.UI.list.adapter.ChildAdapter +.. com.tuto.switch2.UI.list.adapter.ChildAdapter.ChildViewHolder
+com.tuto.switch2.UI.list.adapter.ViewHolder <|-- com.tuto.switch2.UI.list.adapter.ChildAdapter.ChildViewHolder
+com.tuto.switch2.UI.list.adapter.ChildAdapter +.. com.tuto.switch2.UI.list.adapter.ChildAdapter.ChildDiffCallBack
+com.tuto.switch2.UI.list.adapter.ItemCallback <|-- com.tuto.switch2.UI.list.adapter.ChildAdapter.ChildDiffCallBack
+com.tuto.switch2.UI.list.adapter.ChildAdapter +.. com.tuto.switch2.UI.list.adapter.ChildAdapter.OnUserClickedListener
+com.tuto.switch2.Factory <|.. com.tuto.switch2.ViewModelFactory
+androidx.recyclerview.widget.ListAdapter <|-- com.tuto.switch2.UI.list.adapter.AgeAdapter
+com.tuto.switch2.UI.list.adapter.AgeAdapter +.. com.tuto.switch2.UI.list.adapter.AgeAdapter.AgeViewHolder
+com.tuto.switch2.UI.list.adapter.ViewHolder <|-- com.tuto.switch2.UI.list.adapter.AgeAdapter.AgeViewHolder
+com.tuto.switch2.UI.list.adapter.AgeAdapter +.. com.tuto.switch2.UI.list.adapter.AgeAdapter.AgeDiffCallBack
+com.tuto.switch2.UI.list.adapter.ItemCallback <|-- com.tuto.switch2.UI.list.adapter.AgeAdapter.AgeDiffCallBack
+androidx.recyclerview.widget.ListAdapter <|-- com.tuto.switch2.UI.list.adapter.ParentAdapter
+com.tuto.switch2.UI.list.adapter.ParentAdapter +.. com.tuto.switch2.UI.list.adapter.ParentAdapter.ParentViewHolder
+com.tuto.switch2.UI.list.adapter.ViewHolder <|-- com.tuto.switch2.UI.list.adapter.ParentAdapter.ParentViewHolder
+com.tuto.switch2.UI.list.adapter.ParentAdapter +.. com.tuto.switch2.UI.list.adapter.ParentAdapter.ParentDiffCallBack
+com.tuto.switch2.UI.list.adapter.ItemCallback <|-- com.tuto.switch2.UI.list.adapter.ParentAdapter.ParentDiffCallBack
+com.tuto.switch2.UI.list.adapter.ParentAdapter +.. com.tuto.switch2.UI.list.adapter.ParentAdapter.OnUserClickedListener
+androidx.lifecycle.ViewModel <|-- com.tuto.switch2.UI.main.MainViewModel
+androidx.appcompat.app.AppCompatActivity <|-- com.tuto.switch2.UI.list.ListActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.tuto.switch2.UI.main.MainActivity
+@enduml
