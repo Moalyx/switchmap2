@@ -63,7 +63,17 @@ public class ParentRepository {
         return currentMaxParentId;
     }
 
-    public int onAddChildToList(int parentId, String name) {
+    public int childId(){
+        int id =0;
+        if (children != null && !children.isEmpty()){
+            for(int i = 0; i < children.size(); i++){
+                 id = children.get(i).getId();
+            }
+        }
+        return id;
+    }
+
+    public void onAddChildToList(int parentId, String name) {
         currentMaxChildId++;
         children.add(new Child(currentMaxChildId, parentId, name));
 
@@ -83,7 +93,7 @@ public class ParentRepository {
 //        } else {
 //            children.add(new Child(found.getId(), parentId, name));
 //        }
-        return currentMaxChildId;
+
     }
 
     public void onAddAgeToList(int childId, int age) {

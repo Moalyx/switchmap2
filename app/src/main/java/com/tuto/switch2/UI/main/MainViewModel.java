@@ -31,7 +31,8 @@ public class MainViewModel extends ViewModel {
     public void onAddButtonClicked() {
         if (parentName != null && !parentName.isEmpty()) {
             int parentId = parentRepository.onAddParentToList(parentName);
-            int childId = parentRepository.onAddChildToList(parentId, childNames);
+            //int childId = parentRepository.onAddChildToList(parentId, childNames); ICi aussi probleme
+            int childId = parentRepository.childId();
 
             String[] childNameList = childNames.split("[,; \n]");
             for (String childName : childNameList) {
@@ -42,7 +43,7 @@ public class MainViewModel extends ViewModel {
             String[] ageChildList = ages.split("[,; \n]");
             for (String ageChild : ageChildList){
                 ageChild = ageChild.trim();
-                childId++;
+                childId++; //le probleme etait ici, je n'avais pas incrémenter l'id du coup tous les ages avaient le meme childId
                 parentRepository.onAddAgeToList(childId, Integer.parseInt(ageChild));
             }
         }
